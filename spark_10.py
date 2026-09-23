@@ -33,5 +33,15 @@ result = rdd.aggregateByKey(
 
 print(result)
 
+result_2 = rdd.map(
+    lambda p: (p[0], (p[1], 1))
+).reduceByKey(
+    lambda v1, v2: (v1[0] + v2[0], v1[1] + v2[1])
+).mapValues(
+    lambda r: r[0] / r[1]
+).collect()
+
+print(result_2)
+
 spark.stop()
 
